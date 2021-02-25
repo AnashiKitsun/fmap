@@ -34,15 +34,14 @@ do
   modx=${instruction_set[2]} # Chmod +x?
   method=${instruction_set[3]} # Command to link it with? [IMPORTANT TO CHECK]
   # Format data as necessary
-  source=$(echo $source | /usr/bin/sed 's/{ROOT}/'$(echo $PWD | /usr/bin/sed 's/\//\\\//g')'/g') # This weird little thing makes the working directory valid for /usr/bin/sed.
-  dest=$(realpath $dest)
   echo $dest
   # Modx doesn't need formatting
   method=$(echo $method | /usr/bin/tr _ ' ') # Sub underscores for spaces
   # Run and interpret the command
-  echo "Making parent dir $(realpath $dest"/../")"
+  echo "Making parent dir $dest"
   echo $dest
-  mkdir -p $dest"/../"
+  mkdir -p $dest
+  rmdir $dest
   echo "Linking..."
   eval $method $source $dest
   if [ $modx = 1 ]
